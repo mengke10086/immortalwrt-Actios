@@ -196,9 +196,10 @@ jobs:
         PACKAGES=$(echo '${{ inputs.extra_packages }}' | sed 's/,/ /g')
         for pkg in $PACKAGES; do
           if [ -n "$pkg" ]; then
-            # 先删除 .config 中已有的同名配置（无论是 =y/=m 还是 is not set）
-            sed -i "/CONFIG_PACKAGE_${pkg}[= ]/d" .config
-            sed -i "/CONFIG_PACKAGE_${pkg}$/d" .config
+            # 先删除 .config 中已有的同名配置（精确匹配，避免误删类似名称的包）
+            # 匹配: CONFIG_PACKAGE_xxx=y / =m / =n 或 # CONFIG_PACKAGE_xxx is not set
+            sed -i "/^CONFIG_PACKAGE_${pkg}=/d" .config
+            sed -i "/^# CONFIG_PACKAGE_${pkg} is not set/d" .config
             echo "Adding package to .config: CONFIG_PACKAGE_${pkg}=y"
             echo "CONFIG_PACKAGE_${pkg}=y" >> .config
           fi
