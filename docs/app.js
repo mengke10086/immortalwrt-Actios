@@ -272,6 +272,9 @@ const PLUGIN_CATEGORIES = [
     titleKey: "cat_tools",
     plugins: [
       { pkg: "luci-app-ttyd",      hot: true, name: "TTYD 终端",    icon: "💻", desc: { zh: "网页版 SSH 终端",       en: "Web SSH terminal" } },
+      { pkg: "htop",                             name: "htop",         icon: "📊", desc: { zh: "进程/资源监控（命令行）",  en: "Process & resource monitor" } },
+      { pkg: "luci-app-cpu-status",              name: "CPU 状态",     icon: "⚡", desc: { zh: "顶栏 CPU 实时状态",       en: "CPU status in top bar" } },
+      { pkg: "luci-app-temp-status",             name: "温度状态",     icon: "🌡️", desc: { zh: "顶栏温度显示，随身WiFi散热监控", en: "Temperature in top bar" } },
       { pkg: "luci-app-filebrowser",          name: "FileBrowser",  icon: "📁", desc: { zh: "网页文件管理",          en: "Web file manager" } },
       { pkg: "luci-app-filetransfer", warn: true,        name: "文件传输",     icon: "📤", desc: { zh: "文件上传下载",          en: "File transfer" } },
       { pkg: "luci-app-diskman",   hot: true, name: "磁盘管理",     icon: "💾", desc: { zh: "硬盘分区挂载管理",      en: "Disk partition manager" } },
@@ -298,6 +301,8 @@ const PLUGIN_CATEGORIES = [
     titleKey: "cat_network",
     plugins: [
       { pkg: "luci-app-ddns",      hot: true, name: "DDNS",         icon: "🌐", desc: { zh: "动态域名解析",       en: "Dynamic DNS" } },
+      { pkg: "luci-app-firewall",  hot: true, name: "防火墙",       icon: "🔥", desc: { zh: "防火墙规则管理（OpenWrt 核心）", en: "Firewall rules (OpenWrt core)" } },
+      { pkg: "luci-app-natmap",              name: "NATMap",       icon: "🔀", desc: { zh: "Full Cone NAT 映射，游戏/P2P 必备", en: "Full Cone NAT mapping" } },
       { pkg: "luci-app-aliddns",              name: "阿里 DDNS",    icon: "🌐", desc: { zh: "阿里云动态域名",     en: "Aliyun DDNS" } },
       { pkg: "luci-app-ddns-go",              name: "DDNS-GO",      icon: "🌐", desc: { zh: "多平台 DDNS 客户端", en: "Multi-platform DDNS" } },
       { pkg: "luci-app-tencentddns",          name: "腾讯云 DDNS",  icon: "🌐", desc: { zh: "腾讯云动态域名",     en: "Tencent DDNS" } },
@@ -321,6 +326,7 @@ const PLUGIN_CATEGORIES = [
     titleKey: "cat_vpn",
     plugins: [
       { pkg: "luci-app-wireguard",  hot: true, warn: true, name: "WireGuard",      icon: "🔒", desc: { zh: "高性能 VPN 隧道（需 kmod-wireguard）",   en: "High-perf VPN tunnel (needs kmod-wireguard)" } },
+      { pkg: "luci-app-tailscale",  hot: true,           name: "Tailscale",      icon: "🔒", desc: { zh: "Tailscale 异地组网（近年最流行）",         en: "Tailscale mesh VPN (very popular)" } },
       { pkg: "luci-app-softethervpn",          name: "SoftEther VPN",  icon: "🔒", desc: { zh: "多协议 VPN 服务",   en: "Multi-protocol VPN" } },
       { pkg: "luci-app-openvpn",  warn: true,      name: "OpenVPN 服务端", icon: "🔒", desc: { zh: "OpenVPN 服务器",    en: "OpenVPN server" } },
       { pkg: "luci-app-openvpn-server",        name: "OpenVPN 客户端", icon: "🔒", desc: { zh: "OpenVPN 客户端",    en: "OpenVPN client" } },
@@ -348,6 +354,9 @@ const PLUGIN_CATEGORIES = [
       { pkg: "luci-app-3ginfo-lite", hot: true,    name: "3G/4G 信息",       icon: "📶", desc: { zh: "移动网络信号状态",       en: "Mobile signal status" } },
       { pkg: "luci-app-modemband", hot: true,      name: "频段锁定",         icon: "📡", desc: { zh: "锁定 4G/5G 频段",        en: "Lock 4G/5G band" } },
       { pkg: "luci-app-mmconfig",  warn: true,    name: "ModemManager",     icon: "📡", desc: { zh: "调制解调器配置",         en: "Modem configuration" } },
+      { pkg: "luci-app-atinout",   hot: true,     name: "AT 指令工具",      icon: "📟", desc: { zh: "AT 指令调试，随身WiFi必备", en: "AT command tool, essential for portable WiFi" } },
+      { pkg: "luci-app-modeminfo",               name: "Modem 信息",       icon: "📶", desc: { zh: "详细基带/信号信息",         en: "Detailed modem/signal info" } },
+      { pkg: "comgt",                            name: "comgt 拨号",       icon: "📡", desc: { zh: "3G/4G 拨号工具",           en: "3G/4G dial-up tool" } },
     ]
   },
   {
