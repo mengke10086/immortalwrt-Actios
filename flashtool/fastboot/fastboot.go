@@ -24,12 +24,12 @@ const (
 
 // Device 代表一个已连接的 Fastboot 设备
 type Device struct {
-	ctx    *gousb.Context
-	dev    *gousb.Device
-	iface  *gousb.Interface
-	inEP   *gousb.InEndpoint
-	outEP  *gousb.OutEndpoint
-	done   func()
+	ctx   *gousb.Context
+	dev   *gousb.Device
+	cfg   *gousb.Config
+	iface *gousb.Interface
+	inEP  *gousb.InEndpoint
+	outEP *gousb.OutEndpoint
 }
 
 // Open 扫描 USB 总线，找到第一个 Fastboot 设备并打开
@@ -76,27 +76,22 @@ func Open() (*Device, error) {
 	}
 
 	var iface *gousb.Interface
-	var done func()
 	var inEP *gousb.InEndpoint
 	var outEP *gousb.OutEndpoint
 
 	for _, ifaceDesc := range cfg.Desc.Interfaces {
 		for _, alt := range ifaceDesc.AltSettings {
 			if alt.Class == fbClass && alt.SubClass == fbSubClass && alt.Protocol == fbProtocol {
-				// 优先用接口号精确打开，避免 DefaultInterface 拿错
-				iface, done, err = cfg.Interface(ifaceDesc.Number, alt.Alternate)
+				iface, err = cfg.Interface(ifaceDesc.Number, alt.Alternate)
 				if err != nil {
-					iface, done, err = usbDev.DefaultInterface()
-					if err != nil {
-						continue
-					}
+					continue
 				}
 				// 找 IN 和 OUT endpoint
 				for _, ep := range alt.Endpoints {
 					if ep.Direction == gousb.EndpointDirectionIn {
 						inEP, err = iface.InEndpoint(ep.Number)
 						if err != nil {
-							done()
+							iface.Close()
 							cfg.Close()
 							usbDev.Close()
 							ctx.Close()
@@ -105,7 +100,7 @@ func Open() (*Device, error) {
 					} else {
 						outEP, err = iface.OutEndpoint(ep.Number)
 						if err != nil {
-							done()
+							iface.Close()
 							cfg.Close()
 							usbDev.Close()
 							ctx.Close()
@@ -114,7 +109,7 @@ func Open() (*Device, error) {
 					}
 				}
 				if inEP == nil || outEP == nil {
-					done()
+					iface.Close()
 					continue
 				}
 				goto found
@@ -130,18 +125,22 @@ found:
 	return &Device{
 		ctx:   ctx,
 		dev:   usbDev,
+		cfg:   cfg,
 		iface: iface,
 		inEP:  inEP,
 		outEP: outEP,
-		done:  done,
 	}, nil
 }
 
 // Close 释放设备资源
 func (d *Device) Close() {
-	if d.done != nil {
-		d.done()
-		d.done = nil
+	if d.iface != nil {
+		d.iface.Close()
+		d.iface = nil
+	}
+	if d.cfg != nil {
+		d.cfg.Close()
+		d.cfg = nil
 	}
 	if d.dev != nil {
 		d.dev.Close()
