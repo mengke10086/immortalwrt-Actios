@@ -9,8 +9,6 @@
 # 取消注释一个源
 # sed -i 's/^#\(.*helloworld\)/\1/' feeds.conf.default
 
-# 高通410 平台必需：ModemManager、qcom-firmware 等
-echo 'src-git-full openstick https://github.com/lkiuyu/openstick-feeds.git' >> feeds.conf.default
 # 添加第三方 feed 源（small-package 包含passwall2等常用插件）
 echo 'src-git passwall_packages https://github.com/kenzok8/openwrt-packages.git' >> feeds.conf.default
 echo 'src-git passwall2 https://github.com/Openwrt-Passwall/openwrt-passwall2.git;main' >> feeds.conf.default
